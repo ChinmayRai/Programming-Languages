@@ -1,0 +1,164 @@
+  hastype([],const(3),intT).
+true .
+
+?- hastype([],const(a),intT).
+false.
+
+?- hastype([],const(a),boolT).
+false.
+
+?- hastype([],true,boolT).
+true.
+
+?- hastype([],false,boolT).
+true.
+
+?- hastype([],plus(const(2),const(3)),intT).
+true .
+
+?- hastype([],plus(const(2),true),intT).
+false.
+
+hastype([],minus(const(2),true),intT).
+false.
+
+hastype([],minus(const(2),const(3)),intT).
+true.
+
+?- hastype([],multiply(const(2),const(3)),intT).
+true .
+
+?- hastype([],div(const(2),const(3)),intT).
+true .
+
+?- hastype([],mod(const(2),const(3)),intT).
+true .
+
+?- hastype([],power(const(2),const(3)),intT).
+true.
+
+?- hastype([],abs(true),intT).
+false.
+
+?- hastype([],abs(const(5)),intT).
+true.
+
+?- hastype([],neg(true),intT).
+false.
+
+?- hastype([],neg(4),intT).
+false.
+
+?- hastype([],neg(const(3)),intT).
+true.
+
+?- hastype([],lt(const(3),const(5)),boolT).
+true .
+
+?- hastype([],lt(const(7),const(5)),boolT).
+true .
+
+?- hastype([],gt(const(4),const(6)),booT).
+false.
+
+?- hastype([],gt(const(4),const(6)),boolT).
+true .
+
+?- hastype([],le(const(5),const(6)),boolT).
+true .
+
+?- hastype([],ge(const(5),const(5)),boolT).
+true .
+
+?- hastype([],and(true,false),boolT).
+true.
+
+?- hastype([],implies(true,false),boolT).
+true.
+
+?- hastype([],xor(true,false),boolT).
+true.
+
+?- hastype([],or(true,false),boolT).
+true.
+
+?-  hastype([],not(true),boolT).
+true .
+
+?- hastype([],eq(and(true,false),plus(const(2),const(3))),boolT).
+false.
+
+?- hastype([],eq(and(true,false),or(true,false)),boolT).
+true.
+
+?- hastype([],eq(const(4),const(5)),boolT).
+true.
+
+?- hastype([],if_then_else(true,const(5),const(6)),boolT).
+false.
+
+?- hastype([],if_then_else(true,const(5),const(6)),intT).
+true.
+
+?- hastype([],tuple([const(3),false,const(5)]),cartesian([intT,boolT,intT])).
+true .
+
+?- hastype([],absrt(var(x),plus(var(x),const(5))),arrow(intT,intT)).
+true .
+
+?- hastype([],absrt(var(x),plus(var(x),const(5))),arrow(boolT,intT)).
+false.
+
+?- hastype([],app(absrt(var(x),plus(var(x),const(5))),true),intT).
+false.
+
+?- hastype([],app(absrt(var(x),plus(var(x),const(5))),const(0)),intT).
+true
+
+?- hastype([],proj(1,tuple([false,true,const(3)])),intT).
+false.
+
+?- hastype([],proj(1,tuple([false,true,const(3)])),boolT).
+false.
+
+?- hastype([],proj(1,tuple([false,true,true])),boolT).
+true.
+
+?- hastype([],proj(1,tuple([const(4),const(4),const(4)])),intT).
+true 
+
+?- hastype([],let_in_nd(def(var(x),const(2)),multiply(const(4),var(x))),intT).
+true .
+
+?- hastype([],let_in_nd(def(var(x),true),or(false,var(x))),boolT).
+true .
+
+?- typeElaborates([],def(var(x),plus(const(2),true)),[p(var(x),intT)]).
+false.
+
+?- typeElaborates([],def(var(x),plus(const(2),const(6))),[p(var(x),intT)]).
+true 
+
+?- typeElaborates([],seq(def(var(x),const(2)),def(var(y),plus(const(3),const(4)))),[p(var(y),intT),p(var(x),intT)]).
+true .
+
+?- typeElaborates([],seq(def(var(x),const(2)),def(var(y),plus(const(3),var(x)))),[p(var(y),intT),p(var(x),intT)]).
+true .
+
+?- typeElaborates([],par(def(var(x),const(2)),def(var(y),plus(const(3),var(x)))),[p(var(y),intT),p(var(x),intT)]).
+false.
+
+?- typeElaborates([],par(def(var(x),const(2)),def(var(y),plus(const(3),const(5)))),[p(var(x),intT),p(var(y),intT)]).
+true .
+
+?- typeElaborates([],lcl_in_nd(def(var(x),const(2)),def(var(y),plus(const(3),var(x)))),[p(var(y),intT)]).
+true .
+
+?- typeElaborates([],seq(def(var(x),const(2)),def(var(y),var(x))),[(var(y),intT),(var(x),intT)]).
+true .
+
+?- typeElaborates([],par(def(var(x),const(2)),def(var(y),var(x))),[(var(x),intT),(var(y),intT)]).
+false.
+
+?- typeElaborates([],par(def(var(x),const(2)),def(var(y),const(3))),[(var(x),intT),(var(y),intT)]).
+true 

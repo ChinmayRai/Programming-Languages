@@ -1,0 +1,28 @@
+##prove that lgh( concat s1 s2) = lgh(s1) + lgh(s2).
+
+The concat function Appends the a_star part of strings s1 & s2 and stores the length of appended string in the length field of the appended string. The lgh function simply accesses the length field hence lgh (concat s1 s2) gives the length attribute of this *editable string* (str) i.e. lgh s1 + lgh s2.
+
+
+
+
+
+##prove that  lgh(reverse s) = lgh(s).
+
+The reverse function on the str type invokes the rvrs function on the a_star attribute of this str. Now observe the fact that lgh function defines the length (App a b) is to be lgh a + lgh b.
+Now observe the structure of rvrs function. Patterns A c,Empty is mapped to A c and Empty respectively. Hence these transformations will cause no change in length due to identity nature of these transformation. 
+App a b is mapped to App b a. This pattern does not changes the length due to the associativity of addition.(lgh a + lgh b = lgh b + lgh a).
+
+
+
+
+##Prove that lgh(replace w s) = lgh(s).
+
+Assumin that the input in a non-empty string. The Replace function invokes the rplc function on the a_star attribute of this str. Observe the rplc function. Using the deductions of the the previous proof we can justify the theorem for the second pattern of the definition of rplc (It is identiy mapping). For the third pattern we will provide a proof by induction. 
+
+We know that the base case for the a_star type is A c , where c is any char. If s is a single char we have already shown the validity of proposition in this case.
+Since we know that output type of rplc is a_star. Induction hypothesis: All the strings of type a_star of length less than k satisfy the theorem.
+
+Induction step : App (a,A b) where a is an a_star string of length less than k will also satisfy the theorem due to associativity of addition. This means an a_star string of length less than k+1 also satisfies the theorem.
+
+Since the output of rplc is of type a_star, theorem holds 
+

@@ -1,0 +1,75 @@
+%vars
+hastype([(var("X"),typevar(intT)),(var("Y"),typevar(intT))],var("X"),T).
+hastype([(var("X"),typevar(boolT)),(var("X"),typevar(intT))],var("X"),T).
+
+%Constants
+hastype([],const(-652),T).
+hastype([],true,T).
+
+%arithmetic
+hastype([],plus(minus(const(2),const(5)), div(const(6),multiplytiply(const(2),const(5)))),T).
+
+%boolean
+hastype([(var("X"),typevar(boolT))],and(implies(or(var("X"), false), true),implies(var("X"), not(false))),T).
+
+%comparison
+hastype([(var("X"),typevar(boolT)),(var("Y"),typevar(boolT))],or(and(gt(const(-2), const(6)), lt(const(3),const(100))),implies(eq(const(5), var("Y")), var("X"))),T).
+
+%equality
+hastype([],eq(tuple([tuple([const(1),const(3)]),true]),tuple([const(1), const(3),true])),T).
+
+%if then else
+hastype([(var("X"),typevar(boolT)),(var("Y"),typevar(intT))],if_then_else(and(var("X"),gt(var("Y"),const(0))),var("Y"),var("X")),T).
+
+%let d in e
+hastype([(var("Y"),typevar(intT))],let_in_nd(def(var("X"),const(3)),plus(var("Y"),var("X"))),T).
+hastype([(var(x),typevar(intT))],let_in_nd(def(var(y),const(3)),multiply(var(y),const(5))),T).
+
+%abstraction
+hastype( [(var(x), typevar(boolT)), (var(w), typevar(boolT))], absrt(var(x), var(w)), arrow(boolT,boolT)). 
+hastype( [(var(x), typevar(boolT)), (var(w), typevar(boolT))], absrt(var(x), var(w)), arrow(boolT,boolT)). 
+
+%application
+hastype([(var(r), typevar(arrow(boolT,boolT))), (var(s), typevar(boolT))], app(var(r), var(s)), boolT).
+hastype([(var(r), typevar(arrow(boolT,boolT))), (var(s), typevar(boolT)), (var(s), typevar(boolT)), (var(r), arrow(typevar(boolT),typevar(boolT)))], app(var(r), var(s)), X).
+
+
+%n-tuplele
+hastype([(var(x), typevar(boolT)), (var(w), typevar(boolT))], tuple([var(x), var(w), and(var(x), var(y))]), cartesian(boolT, boolT)).
+
+%projection
+hastype([(var(y), typevar(boolT)), (var(z), typevar(boolT))], proj(1,tuple([var(x), var(w), and(var(x), var(y))])), typevar(boolT)).
+
+				%constructors
+				hastype([(var(r), typevar(boolT))] ,inl(var(r)), disjunction(typevar(boolT),typevar(boolT))).
+				hastype([(var(r), typevar(boolT))] ,inl(var(r)), X).
+				hastype([(var(r), typevar(boolT))] ,inr(var(r)), disjunction(typevar(boolT),typevar(boolT))).
+
+				%case analysis
+				hastype([(var(t), typevar(boolT)), (var(r), typevar(boolT))], case(inl(var(t)), var(r)), typevar(boolT)).
+				hastype([(var(t), typevar(boolT)), (var(r), typevar(boolT))], case(inr(var(t)), var(r)), typevar(boolT)).
+
+
+%type elaborates
+
+typeElaborates([],def(var("X"),plus(const(3),const(4))),T).
+typeElaborates([],def(var("Y"),true),T).
+typeElaborates([],par(def(var("X"),const(3)),def(var("Y"),true)),T).
+typeElaborates([],par(def(var("X"),const(3)),def(var("X"),true)),T).
+typeElaborates([],seq(def(var("X"),multiply(const(31),const(20))),def(var("Y"),true)),T).
+
+typeElaborates([(var("X"),typevar(boolT)),(var("Y"),typevar(intT))],lcl_in_nd(def(var("X"),const(31)),par(def(var("X"),tuple([var("Y")])),def(var("Y"),false))),T).
+
+typeElaborates([(var("X"),typevar(boolT)),(var("Y"),typevar(intT))],lcl_in_nd(def(var("X"),const(20)),par(def(var("X"),const(3)),def(var("Y"),false))),T).
+
+typeElaborates([(var(x),typevar(intT))],def(var(y),const(9)),Gamma).
+
+typeElaborates([(var(x),typevar(intT))],seq(def(var(z),true),def(var(y),false)),Gamma).
+
+typeElaborates([(var(x),typevar(intT))],par(def(var(z),const(9)),def(var(y),const(0))),Gamma).
+
+typeElaborates([(var(x),typevar(intT))],lcl_in_nd(def(var(z),const(9)),def(var(y),const(4))),Gamma).
+
+typeElaborates([(var(x),typevar(intT))],par(seq(def(var(z),const(8)),def(var(y),true)),def(var(y),false)),Gamma).
+
+typeElaborates([(var(x),typevar(intT))],seq(par(def(var(z),const(45)),def(var(y),false)),def(var(y),const(8))),Gamma).

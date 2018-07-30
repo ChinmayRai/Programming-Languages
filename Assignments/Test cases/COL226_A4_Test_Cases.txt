@@ -1,0 +1,111 @@
+(*
+ * Note: you need to change the following datatype and expressions as per your submitted code
+ * Please do the changes before you come for demo.
+ *)
+
+datatype exp = Const of int
+			| T
+			| F
+			| Var of string
+			| List of exp list
+			| Plus of exp * exp
+			| Minus of exp * exp
+			| Multiply of exp * exp
+			| Div of exp * exp
+			| Tup of exp list
+			| Proj of exp * int
+			| Gt of exp * exp
+			| Ls of exp * exp
+			| Eq of exp * exp
+			| ITE of exp * exp * exp
+			| Lambda of exp * exp
+			| App of exp * exp
+
+			| LetinEnd of exp * exp
+			| Def of exp * exp
+			| Seq of exp list
+			| Par of exp list
+			| Localinend of exp list * exp
+			| Dec of exp list
+
+
+			| Ctup of closure list
+			| At of int
+			| Bind of exp
+			| Restp of exp
+			| Tothisp of exp
+			| Rests of exp
+			| Tothiss of exp
+			| Restm of exp
+			| Tothism of exp
+			| Restd of exp
+			| Tothisd of exp
+			| Restg of exp
+			| Tothisg of exp
+			| Restl of exp
+			| Tothisl of exp
+			| Reste of exp
+			| Tothise of exp
+			| Ifthn of exp * exp
+			| Lets of exp*exp
+			and
+			closure = Closure of (exp * closure) list * exp
+
+
+
+executeK (Closure([(fun ("z") -> Closure([],Const(3)) )],Var("z"))) [];;
+
+executeK (Closure([],Plus(Plus(Const(2),Const(3)),Plus(Const(2),Const(3))))) [];;
+
+executeK (Closure([(fun ("z")-> Closure([],Const(3)))],Plus(Const(2),Var("z")))) [];;
+
+executeK (Closure([],App(Lambda(Var("x"),Plus(Var("x"),Const(1))),Const(2)))) [];;
+
+executeK (Closure([],App(Lambda(Var("x"),Multiply(Var("x"),Plus(Var("x"),Const(1)))),Const(2)))) [];;
+
+executeK (Closure([],App(Lambda(Var("x"),App(Lambda(Var("d"),Multiply(Var("d"),Const(2))),Const(2))),Const(2)))) [];;
+
+executeK (Closure([],ITE(Gt(Const(8),Const(2)),App(Lambda(Var("x"),Div(Var("x"),Const(2))),Const(2)),App(Lambda(Var("x"),Multiply(Var("x"),Plus(Var("x"),Const(1)))),Const(2))))) [];;
+
+executeK (Closure([],ITE(Gt(Const(1),Const(2)),App(Lambda(Var("x"),Div(Var("x"),Const(2))),Const(2)),App(Lambda(Var("x"),Multiply(Var("x"),Plus(Var("x"),Const(1)))),Const(2))))) [];;
+
+---------------------executeK(Closure([],LetinEnd(Par[Def(Var("a"),Const(2))],Plus(Var("a"),Const(20)))),[]);;
+
+----------------------executeK(Closure([],LetinEnd(Seq[Def(Var("a"),Const(2))],Plus(Var("a"),Const(20)))),[]);;
+
+executeK (Closure([],Proj(2,Tuple([Const(1);Const(2);Const(3)])))) [];;
+
+----------------------executeK(Closure([],App(Lambda(Var("x"),LetinEnd(Par[Def(Var("a"),Const(2))],Plus(Var("a"),Var("x")))),Const(2))),[]);;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+execute [] [] (compile(Proj(2,Tuple([Const(12);Const(121);Const(33)])))) [];;
+
+		execute([LetinEnd(Par([Def(Var("a"),Const(1)),Def(Var("b"),Const(2)),Def(Var("c"),Const(3))]),Plus(Plus(Var("a"),Var("b")),Multiply(("c"),Const(2)))),Multiply(Const(2),Const(3))]);;
+
+execute [] [] (compile(ITE(Gt(Const(4),Const(2)),Plus(Const(1),Const(3)),Minus(Const(1),Const(3))))) [] ;;
+
+		execute([LetinEnd(Dec([Par([Def(Var("f"),F)]),Seq([Def(Var("a"),Const(1)),Def(Var("b"),Const(2)),Def(Var("c"),Const(3))])]),Plus(Plus(Var("a"),Var("b")),Multiply(Var("c"),Const(2)))),Multiply(Const(2),Const(3))]);;
+
+execute [] [] (compile(App(Lambda(Var("x"),Plus(Var("x"),Const(1))),Const(2)))) [];;
+
+execute [] [] (compile(App(Lambda(Var("x"),Multiply(Var("x"),Plus(Var("x"),Const(1)))),Const(2)))) [];;
+
+execute [] [] (compile(App(Lambda(Var("x"),App(Lambda(Var("d"),Multiply(Var("d"),Const(2))),Const(2))),Const(2)))) [];;
+
+		execute([Seq([Def(Var("a"),LetinEnd(Par([Def(Var("a"),Const(1))]),App(Lambda(Var("x"),Plus(Var("x"),Const(1))),Var("a"))))]),Plus(Var("a"),Const(1))]);
+
+execute [] [] (compile(Proj(2,Tuple([Const(11);Tuple([Const(11);Const(12);Const(13)]);Const(11)])))) [];;
+
+execute [] [] (	compile(	App(	App(Lambda(Var("x"),Plus(Var("x"),Const(1))),Lambda(Var("y"),Plus(Var("y"),Const(1))))		,Const(1))	)	) [];;

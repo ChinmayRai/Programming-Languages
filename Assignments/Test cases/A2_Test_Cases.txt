@@ -1,0 +1,69 @@
+(* Note:
+ * Please make suitable changes to the shared test cases so that
+ * the constructors match your signature definition.
+ *)
+
+(*--==Compile & Execute==--*)
+
+let q1=Plus(Const (1),Const (2));;
+let q2=Multiply(Const (6),Const (6));;
+let q3=Pow(Const (2),Const (4));;
+let q4=Div(Const (6),Const (3));;
+let q5=Var("iden1");;
+let q6=Var("iden2");;
+
+let q7=Abs(Const (-1));;
+let q8=Proj(2,Tuple([Const (12);Const (121);Const (33)]));;
+
+let q9=Minus(Proj(2,Tuple[Const (2);Const (5);Const (8)]),Const (1));;
+let q10=Mod(Proj(2,Tuple[Const (2);Const (5);Const (8)]),Const (2));;
+
+let q11= Or(
+	Eq(Const (5),Const (5)),
+	And(Eq(Minus(Const (2),Const (1)),Const (1)),
+		Mod(Proj(2,Tuple[Const (2);Const (5);Const (8)]),Const (2))
+	)
+);;
+
+let q12= And(T, F);;
+let q13= Imply(Not(Imply(Or(T, F), And(T, F))),Imply(And(T, F), Or(T, F)));;
+
+let q14 = Ge(Const (4),Const (2));;
+let q15 = Le(Const (4),Const (2));;
+
+eval q1;;
+execute [] table (compile q1);;
+eval q2;;
+execute [] table (compile q2);;
+eval q3;;
+execute [] table (compile q3);;
+eval q4;;
+execute [] table (compile q4);;
+eval q5;;
+execute [] table (compile q5);;
+eval q6;;
+execute [] table (compile q6);;
+eval q7;;
+execute [] table (compile q7);;
+eval q8;;
+execute [] table (compile q8);;
+eval q9;;
+execute [] table (compile q9);;
+eval q10;;
+execute [] table (compile q10);;
+eval q11;;
+execute [] table (compile q11);;
+eval q12;;
+execute [] table (compile q12);;
+eval q13;;
+execute [] table (compile q13);;
+eval q14;;
+execute [] table (compile q14);;
+eval q15;;
+execute [] table (compile q15);;
+
+
+(*Ifthenelse(Gtr(Const (4),Const (2)),Plus(Const (1),Const (3)),Sub(Const (1),Const (3)));*)
+
+(* Lambda is a lambda function of type exp*exp and LetinEnd is a ternary operator of type exp*exp*exp *)
+Apply(Lambda(Var("x"),LetinEnd(Para[Assgn(Var("a"),Const (2))],Plus(Var("a"),Var("x")))),Const (2))

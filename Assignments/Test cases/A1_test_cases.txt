@@ -1,0 +1,75 @@
+(* alphabet=["1"; "2"; "a"; "b"; "c"; "A"];;  *)
+
+let q1 = create "";;
+let q2 = create "a";;
+let q3 = create "abc";;
+let q4 = create "12";;
+let q5 = create "1";;
+let q6 = create "1A";;
+
+
+(*      lgh Nil;;
+ *	lgh "a";;
+ *	lgh "abc";;
+ *	lgh "12";;	*)
+lgh q1;;
+lgh q2;;
+lgh q3;;
+lgh q4;;
+
+
+(*	nonempty Nil;;
+ *	nonempty "a";;
+ *	nonempty "12";;  *)
+nonempty q1;;
+nonempty q2;;
+nonempty q4;;
+
+
+
+(*	concat Nil Nil;;
+ *	concat Nil "a";;
+ * 	concat "1" Nil;;
+ *	concat "1A" "abc";;  *)
+concat q1 q1;;
+concat q1 q2;;
+concat q5 q1;;
+concat q6 q3;;
+
+
+
+
+
+(*	reverse Nil;;
+ *      reverse "abc";;
+ *	reverse "12";;   *)
+reverse q1;;
+reverse q3;;
+reverse q4;;
+
+
+
+(*	first Nil;;
+ *	first "a";;
+ *	first "abc";;	*)
+first q1;;
+first q2;;
+first q3;;
+
+
+
+(*	last Nil;;
+ *	last "a";;
+ *	last "abc";;	*)
+first q1;;
+first q2;;
+first q3;;
+
+
+let editable = create "abac12a2aAac211";;
+
+forward editable;;
+back editable;;
+moveTo editable 10;;
+replace 'b' editable ;;
+
